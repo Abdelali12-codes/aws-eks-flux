@@ -24,10 +24,10 @@ spec:
         namespace: flux-system
   values:
     deployment:
-        name: spring-boot-deployment
+        name: spring-boot-app-deployment
         replicas: 2
         image: 080266302756.dkr.ecr.us-west-2.amazonaws.com/springbootappv1
-        containername: spring-boot-container
+        containername: spring-boot-app-container
         containerport: 8080
     service:
         name: helm-service
@@ -35,9 +35,4 @@ spec:
         port: 80
         targetPort: 8080
         nodePort: 30080
-    #ingress:
-    #  enabled: true
-    #  annotations:
-    #    kubernetes.io/ingress.class: alb
-    #    alb.ingress.kubernetes.io/scheme: internet-facing
-    #    alb.ingress.kubernetes.io/target-type: ip
+   
