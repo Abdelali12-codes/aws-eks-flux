@@ -2,7 +2,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: flux-helm
+  name: flux-helm-repo
   namespace: default
 spec:
   url: https://abdelali12-codes.github.io/abdelali-helm-charts
@@ -20,7 +20,7 @@ spec:
       chart: spring-boot-app
       sourceRef:
         kind: HelmRepository
-        name: flux-helm
+        name: flux-helm-repo
         namespace: default
   values:
     deployment:
