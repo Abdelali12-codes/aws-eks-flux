@@ -5,7 +5,7 @@ metadata:
   name: k8s-flux
   namespace: flux-system
 spec:
-  interval: 7m
+  interval: 2m
   targetNamespace: default
   sourceRef:
     kind: GitRepository
