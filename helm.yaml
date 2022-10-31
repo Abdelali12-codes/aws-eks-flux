@@ -1,0 +1,41 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: flux-helm
+  namespace: flux-system
+spec:
+  url: https://abdelali12-codes.github.io/helm-charts
+  interval: 10m
+
+
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: flux-helm-release
+  namespace: flux-system
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: spring-boot-app
+      sourceRef:
+        kind: HelmRepository
+        name: flux-helm
+        namespace: flux-system
+  values:
+    replicaCount: 2
+    resources:
+      requests:
+        cpu: "16m"
+        memory: "24Mi"
+      limits:
+        cpu: "16m"
+        memory: "24Mi"
+    #ingress:
+    #  enabled: true
+    #  annotations:
+    #    kubernetes.io/ingress.class: alb
+    #    alb.ingress.kubernetes.io/scheme: internet-facing
+    #    alb.ingress.kubernetes.io/target-type: ip

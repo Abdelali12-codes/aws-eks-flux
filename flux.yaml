@@ -1,0 +1,32 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: flux
+  namespace: flux-system
+spec:
+  interval: 2m
+  url: https://github.com/Abdelali12-codes/aws-eks.git
+  #secretRef: # use token auth 
+  #  name: ssh-credentials # Flux user PAT (read-only access)
+  ref:
+    branch: master
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: flux
+  namespace: flux-system
+spec:
+  interval: 2m
+  targetNamespace: flux-system
+  sourceRef:
+    kind: GitRepository
+    name: flux
+  path: "./flux"
+  prune: true
+  
+  
+  #https://fluxcd.io/flux/components/kustomize/kustomization/
+  
+  
+  
