@@ -5,12 +5,10 @@ metadata:
    name: my-aws-ingress-class
    annotations:
       ingressclass.kubernetes.io/is-default-class: "true"
-
 spec:
    controller: ingress.k8s.aws/alb
    
 ---
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

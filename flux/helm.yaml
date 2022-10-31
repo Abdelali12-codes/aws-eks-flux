@@ -6,9 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   url: https://abdelali12-codes.github.io/helm-charts
-  interval: 10m
-
-
+  interval: 7m
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -16,7 +14,7 @@ metadata:
   name: flux-helm-release
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 7m
   chart:
     spec:
       chart: spring-boot-app
@@ -25,14 +23,18 @@ spec:
         name: flux-helm
         namespace: flux-system
   values:
-    replicaCount: 2
-    resources:
-      requests:
-        cpu: "16m"
-        memory: "24Mi"
-      limits:
-        cpu: "16m"
-        memory: "24Mi"
+    deployment:
+        name: spring-boot-deployment
+        replicas: 2
+        image: 080266302756.dkr.ecr.us-west-2.amazonaws.com/springbootappv1
+        containername: spring-boot-container
+        containerport: 8080
+    service:
+        name: helm-service
+        type: NodePort
+        port: 80
+        targetPort: 8080
+        nodePort: 30080
     #ingress:
     #  enabled: true
     #  annotations:

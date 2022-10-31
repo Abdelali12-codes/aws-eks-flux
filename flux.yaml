@@ -24,8 +24,6 @@ spec:
     name: flux
   path: "./flux"
   prune: true
-  
-  
   #https://fluxcd.io/flux/components/kustomize/kustomization/
   
   
