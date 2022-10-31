@@ -1,0 +1,55 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+   name: my-aws-ingress-class
+   annotations:
+      ingressclass.kubernetes.io/is-default-class: "true"
+
+spec:
+   controller: ingress.k8s.aws/alb
+   
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-nginx-service
+  labels:
+    app: nginx-app
+  annotations:
+    # Ingress Core Settings
+    alb.ingress.kubernetes.io/load-balancer-name: ingress-loadbalancer
+   # kubernetes.io/ingress.class: "alb"
+    alb.ingress.kubernetes.io/scheme: internal
+    # Health Check Settings
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP 
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
+    alb.ingress.kubernetes.io/success-codes: '200'
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/target-type: instance
+    # SSL 
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+spec:
+  ingressClassName: my-aws-ingress-class
+  rules:
+   - http:
+      paths:
+      - path: /app1
+        pathType: Prefix
+        backend:
+          service:
+            name: flaskappv1-service
+            port:
+              number: 80
+      - path: /app2
+        pathType: Prefix
+        backend:
+           service:
+              name: flaskappv2-service
+              port:
+                number: 80
