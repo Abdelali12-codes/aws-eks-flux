@@ -66,7 +66,7 @@ spec:
         app: springbootappv2
     spec:
      containers:
-     - image: 080266302756.dkr.ecr.us-west-2.amazonaws.com/springbootappv2:62c2f95
+     - image: 080266302756.dkr.ecr.us-west-2.amazonaws.com/springbootappv2:6bfae60
        name: springbootappv2
        ports:
        - containerPort: 8080
